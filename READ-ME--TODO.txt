@@ -1,0 +1,69 @@
+
+
+
+- create module for cryptographic key generation
+
+- finish hashgraph
+
+PLATFORM FEATURES:
+- algorithms for:
+  - algorithm: content recommendation
+    - should be random posts but still mildly associated with your interests
+  
+  - algorithm: authenticity score adjustment
+  
+  - algorithm: community moderation
+    - downvotes equal shown less, both now and going forward
+    - upvotes help spread
+    
+  - algorithm: notification algorithm
+    - determines which subset of random users gets notified of your post
+    - scales up or down based on how your interaction community score and engagement analytics
+
+   - algorithm: engagement analytics
+      - time on post, time in comments, likes/comments/etc, 
+      - whether you add proof/context
+      - 
+
+   - algorithm: source of truth consensus algorithm  
+
+   - algorithm:  for the specific virality of ad buyers
+    - they will know ahead of time that the reach and ROI of their buy is directly contingent on how good their content is at "tricking" the platform
+  
+
+  - features for users to verify as true or verify it as they simply believe it to be true
+  
+  - track user engagement analytics to feed into content recommendation algorithm
+  
+  
+  - real time updates
+
+
+
+  - frontend: posts should click to open up like a imessage group thread
+
+
+  Load Balancing:
+  Update the deployment configuration to include a load balancer in front of our application instances.
+  No direct code changes are needed within our Java application for load balancing.
+  The deployment configuration files (e.g., Kubernetes YAML files) will need to be updated to include the load balancer configuration.
+  
+  Database Sharding:
+  Update the database schema to include sharding keys and partition data across multiple database instances.
+  Implement routing logic within our application to direct database queries to the appropriate shard based on the sharding key.
+  Update database access code to support sharded database connections and distributed transactions.
+  
+  Caching:
+  Integrate caching mechanisms within our application code to cache frequently accessed data.
+  Use caching libraries or frameworks (e.g., Redis or Memcached) to store and retrieve cached data.
+  Identify areas of our application where caching can be applied, such as user profiles, feed posts, and static resources.
+  
+  Asynchronous Processing:
+  Identify time-consuming operations within our application that can be offloaded to background tasks or microservices.
+  Implement asynchronous processing using frameworks or libraries that support non-blocking operations (e.g., Spring Boot's @Async annotation or message queues like RabbitMQ or Kafka).
+  Refactor code to delegate time-consuming tasks to background workers or microservices and update the main request-handling flow to handle requests asynchronously.
+  
+  Auto-scaling:
+  Configure auto-scaling policies on our cloud platform (e.g., AWS, Azure, Google Cloud) to automatically provision or de-provision resources based on demand.
+  Define scaling triggers and thresholds to adjust resource capacity dynamically in response to changing workload patterns.
+  Monitor resource utilization metrics and performance indicators to fine-tune auto-scaling configurations for optimal performance and cost efficiency.
