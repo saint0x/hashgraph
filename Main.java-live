@@ -3,7 +3,6 @@ import service.LedgerService;
 import service.ConsensusService;
 
 import java.io.*;
-import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +10,6 @@ import java.util.Scanner;
 public class Main {
   private static final String HASHGRAPH_FILE_PATH = "hashgraph.txt";
   private static final LedgerService ledgerService = new LedgerService();
-  private static final PrivateKey mockPrivateKey = generateMockPrivateKey();
 
   public static void main(String[] args) {
     // Initialize services
@@ -38,8 +36,8 @@ public class Main {
       // Mock data for transactions
       Transaction transaction = new Transaction("senderUserId" + i, "recipientUserId" + i,
           "Sample transaction content " + i);
-      // Submit transaction to ledger with mock private key
-      ledgerService.submitTransaction(transaction, mockPrivateKey); // Pass mockPrivateKey here
+      // Submit transaction to ledger
+      ledgerService.submitTransaction(transaction);
       transactions.add(transaction);
     }
 
@@ -81,7 +79,7 @@ public class Main {
         Transaction newTransaction = createNewTransaction();
         if (newTransaction != null) {
           // Submit new transaction to ledger
-          ledgerService.submitTransaction(newTransaction, mockPrivateKey);
+          ledgerService.submitTransaction(newTransaction);
           // Append the new transaction to the hashgraph file
           saveHashgraphToFile(List.of(newTransaction));
         }
@@ -124,19 +122,6 @@ public class Main {
       }
     } catch (IOException e) {
       System.err.println("Error occurred while reading hashgraph from file: " + e.getMessage());
-    }
-  }
-
-  // Method to generate a mock private key for testing purposes
-  private static PrivateKey generateMockPrivateKey() {
-    try {
-      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-      keyPairGenerator.initialize(2048);
-      KeyPair keyPair = keyPairGenerator.generateKeyPair();
-      return keyPair.getPrivate();
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-      return null;
     }
   }
 }

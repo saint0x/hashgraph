@@ -18,10 +18,11 @@ public class LedgerService {
   }
 
   // Method to submit a transaction to the ledger
-  public void submitTransaction(Transaction transaction) {
+  public void submitTransaction(Transaction transaction, PrivateKey privateKey) {
     // Add the transaction to the ledger
     transaction.setTimestamp(System.currentTimeMillis()); // Set current timestamp
-    transaction.setSignature(signTransaction(transaction)); // Sign the transaction
+    transaction.setSignature(signTransaction(transaction, privateKey)); // Sign the transaction with the provided
+                                                                        // private key
     ledger.add(transaction);
     // Print confirmation message
     System.out.println("Transaction submitted to the ledger: " + transaction.getTransactionId());
@@ -45,19 +46,19 @@ public class LedgerService {
   }
 
   // Method to sign a transaction using cryptographic signatures
-  private String signTransaction(Transaction transaction) {
-    try {
-      PrivateKey privateKey = getPrivateKey(); // Get private key
-      Signature signature = Signature.getInstance("SHA256withRSA");
-      signature.initSign(privateKey);
-      signature.update(transaction.toString().getBytes());
-      byte[] signatureBytes = signature.sign();
-      return bytesToHex(signatureBytes); // Convert signature to hexadecimal string
-    } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
-      e.printStackTrace();
-      return null;
-    }
+  private String signTransaction(Transaction transaction, PrivateKey privateKey) {
+      try {
+          Signature signature = Signature.getInstance("SHA256withRSA");
+          signature.initSign(privateKey);
+          signature.update(transaction.toString().getBytes());
+          byte[] signatureBytes = signature.sign();
+          return bytesToHex(signatureBytes); // Convert signature to hexadecimal string
+      } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
+          e.printStackTrace();
+          return null;
+      }
   }
+
 
   // Method to convert byte array to hexadecimal string
   private String bytesToHex(byte[] bytes) {
@@ -68,7 +69,7 @@ public class LedgerService {
     return result.toString();
   }
 
-  // Method to get the private key from file
+  // Method to get the private key from file in the root directory
   private PrivateKey getPrivateKey() {
     try {
       byte[] keyBytes = Files.readAllBytes(Paths.get("private_key.der"));
@@ -79,4 +80,5 @@ public class LedgerService {
       return null;
     }
   }
+
 }
